@@ -41,4 +41,4 @@ npm run dev
 ``` 
 
 ### About the database
-Although the project code is publicly available, database access is restricted to me and [Meiro](https://github.com/meirochun). If you want to test the project, I recommend setting up a local database. Alternatively, I also recommend supabase
+Although the project code is publicly available, database access is restricted to me and [Meiro](https://github.com/meirochun). If you want to test the project, I recommend setting up a local database. Alternatively, I also recommend [supabase](https://supabase.com) for creating online PostgreSQL databases.
