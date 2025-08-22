@@ -44,4 +44,4 @@ npm run dev
 ```
 
 ### Sobre o banco de dados
-Apesar do código do projeto estar disponível para todos, o acesso do banco de dados é restrito a mim e ao [Meiro](https://github.com/meirochun). Caso deseje testar o projeto, recomendo que faça um banco localmente. Alternativamente, também recomendo a plataforma [supabase](https://supabase.com) para a criação online de bancos de dados PostgreSQL.
+Apesar do código do projeto estar disponível para todos, o acesso do banco de dados é restrito aos criadores [MrFelopes](https://github.com/mrfelopes) e [Meiro](https://github.com/meirochun). Caso deseje testar o projeto, recomendamos que faça um banco localmente ou em uma plataforma web.
