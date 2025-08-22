@@ -3,19 +3,42 @@
 import { useState } from "react";
 
 export default function LoginForm() {
-    const [username, setUsername] = useState("");
-    const [senha, setSenha] = useState("");
+    const [Username, setUsername] = useState("");
+    const [Password, setPassword] = useState("");
+    const [error, setError] = useState("");
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError("");
+        try
+        {
+            const res = await fetch("http://localhost:5149/api/auth/login", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    Username,
+                    Password,
+                }),
+            });
+            const data = await res.json();
+            const token = data.data.token;
+
+            localStorage.setItem("authToken", token);
+            console.log(token);
+        } catch (e) {
+            if (e instanceof Error)
+            {
+                setError(e.message);
+            } else setError(String(e))
+        }
     };
 
     return (
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <input
-                type="email"
+                type="text"
                 placeholder="Nome de usuário"
-                value={username}
+                value={Username}
                 onChange={(e) => setUsername(e.target.value)}
                 className="border p-2 rounded-lg border-gray-500 focus:outline-none"
                 required
@@ -23,8 +46,8 @@ export default function LoginForm() {
             <input
                 type="password"
                 placeholder="Senha"
-                value={senha}
-                onChange={(e) => setSenha(e.target.value)}
+                value={Password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="border p-2 rounded-lg border-gray-500 focus:outline-none"
                 required
             />
@@ -34,6 +57,7 @@ export default function LoginForm() {
             >
                 Entrar
             </button>
+            {error && <p className="text-red-500 mx-auto">{error}</p>}
         </form>
     );
 }
