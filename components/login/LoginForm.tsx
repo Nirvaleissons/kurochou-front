@@ -1,13 +1,13 @@
 ﻿"use client";
 
-import { useState } from "react";
+import {FormEvent, useState} from "react";
 
 export default function LoginForm() {
     const [Username, setUsername] = useState("");
     const [Password, setPassword] = useState("");
     const [error, setError] = useState("");
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         setError("");
         try
@@ -24,7 +24,6 @@ export default function LoginForm() {
             const token = data.data.token;
 
             localStorage.setItem("authToken", token);
-            console.log(token);
         } catch (e) {
             if (e instanceof Error)
             {

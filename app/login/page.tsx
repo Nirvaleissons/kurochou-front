@@ -1,6 +1,10 @@
-﻿import LoginForm from "@/components/LoginForm";
+﻿"use client"
+
+import LoginForm from "@/components/login/LoginForm";
+import { useRedirectIfTokenIsValid } from "@/hooks/useAuth";
 
 export default function LoginPage() {
+    useRedirectIfTokenIsValid();
     return (
         <main className="flex flex-col items-center justify-center min-h-screen bg-gray-950 overflow-hidden">
             <p className="text-white text-2xl mb-6">kurochou.me</p>
