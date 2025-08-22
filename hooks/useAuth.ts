@@ -1,7 +1,8 @@
-﻿import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+﻿"use client"
+import { useRouter } from "next/navigation";
+import {useEffect, useState} from "react";
 
-export function useRedirectIfTokenIsValid()
+export function useRedirectIfTokenIsValid(): void
 {
     const router = useRouter();
 
@@ -11,8 +12,18 @@ export function useRedirectIfTokenIsValid()
     }, [router]);
 }
 
+export function useUsername(): string | undefined
+{
+    const [username, setUsername] = useState<string>();
 
-function isTokenExpired(token: string)
+    useEffect(() => {
+        const usernameInStorage = localStorage.getItem('user');
+        if (usernameInStorage) setUsername(usernameInStorage);
+    }, []);
+    return username;
+}
+
+function isTokenExpired(token: string): boolean
 {
     if (!token) return true;
 
