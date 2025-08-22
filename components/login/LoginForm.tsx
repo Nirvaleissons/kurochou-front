@@ -1,11 +1,13 @@
 ﻿"use client";
 
 import {FormEvent, useState} from "react";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
     const [Username, setUsername] = useState("");
     const [Password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const router = useRouter();
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
@@ -24,6 +26,7 @@ export default function LoginForm() {
             const token = data.data.token;
 
             localStorage.setItem("authToken", token);
+            router.replace("./");
         } catch (e) {
             if (e instanceof Error)
             {
