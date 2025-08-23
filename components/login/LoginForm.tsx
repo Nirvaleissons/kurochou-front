@@ -23,7 +23,7 @@ export default function LoginForm() {
                 }),
             });
             const data = await res.json();
-            if (data.data.token)
+            if (data?.data?.token)
             {
                 localStorage.setItem("authToken", data.data.token);
                 localStorage.setItem("user", Username);
