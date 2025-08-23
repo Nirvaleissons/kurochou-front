@@ -2,16 +2,15 @@
 
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function LoginForm() {
     const [Username, setUsername] = useState("");
     const [Password, setPassword] = useState("");
-    const [error, setError] = useState("");
     const router = useRouter();
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setError("");
         try
         {
             const res = await fetch("http://localhost:5149/api/auth/login", {
@@ -27,16 +26,17 @@ export default function LoginForm() {
             {
                 localStorage.setItem("authToken", data.data.token);
                 localStorage.setItem("user", Username);
+                toast.success(`Bem-vindo(a), ${Username}!`);
                 router.replace("./");
             } else {
-                setError("Credenciais inválidas!")
+                toast.error("Credenciais inválidas.")
             }
 
         } catch (e) {
             if (e instanceof Error)
             {
-                setError(e.message);
-            } else setError(String(e))
+                toast.error("Ocorreu um erro com o servidor")
+            } else toast.error(String(e));
         }
     };
 
@@ -64,7 +64,6 @@ export default function LoginForm() {
             >
                 Entrar
             </button>
-            {error && <p className="text-red-500 mx-auto">{error}</p>}
         </form>
     );
 }
