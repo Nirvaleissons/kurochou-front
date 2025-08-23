@@ -4,7 +4,7 @@ import Navbar from "@/components/general/Navbar";
 import { useUsername } from "@/hooks/useAuth";
 
 export default function Home() {
-    const username = useUsername();
+    const username: string | undefined = useUsername();
     return (
         <main className="flex flex-col items-center justify-center min-h-screen bg-gray-950">
             <Navbar />

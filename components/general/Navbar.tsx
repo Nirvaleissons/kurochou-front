@@ -3,8 +3,8 @@
 import { useIsTokenExpired, useLogout } from "@/hooks/useAuth";
 
 export default function Navbar() {
-    const expired = useIsTokenExpired();
-    const logout = useLogout();
+    const expired: boolean = useIsTokenExpired();
+    const logout: () => void = useLogout();
     return (
         <nav className="fixed top-0 left-0 w-full h-20 bg-[rgba(1,3,9,0.95)] shadow-[inset_0px_4px_6px_4px_rgba(0,_0,_0,_0.7)] flex items-center px-6 z-50">
             <div className="text-white text-4xl font-semibold tracking-wide">
