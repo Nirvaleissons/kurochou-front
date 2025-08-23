@@ -1,4 +1,4 @@
-﻿"use client";
+﻿"use client"
 
 import {FormEvent, useState} from "react";
 import { useRouter } from "next/navigation";
@@ -23,10 +23,15 @@ export default function LoginForm() {
                 }),
             });
             const data = await res.json();
-            const token = data.data.token;
+            if (data.data.token)
+            {
+                localStorage.setItem("authToken", data.data.token);
+                localStorage.setItem("user", Username);
+                router.replace("./");
+            } else {
+                setError("Credenciais inválidas!")
+            }
 
-            localStorage.setItem("authToken", token);
-            router.replace("./");
         } catch (e) {
             if (e instanceof Error)
             {

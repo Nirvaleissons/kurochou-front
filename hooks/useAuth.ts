@@ -1,14 +1,13 @@
 ﻿"use client"
 import { useRouter } from "next/navigation";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
+import { isTokenExpired } from "@/utils/auth/auth";
 
 export function useRedirectIfTokenIsValid(): void
 {
     const router = useRouter();
-
     useEffect(() => {
-        const token = localStorage.getItem('authToken');
-        if (token && !isTokenExpired(token)) router.replace('./');
+        if (!isTokenExpired()) router.replace('./');
     }, [router]);
 }
 
@@ -23,19 +22,21 @@ export function useUsername(): string | undefined
     return username;
 }
 
-function isTokenExpired(token: string): boolean
+export function useIsTokenExpired(): boolean
 {
-    if (!token) return true;
+    const [expired, setExpired] = useState<boolean>();
+    useEffect(() => {
+        setExpired(isTokenExpired());
+    }, [])
+    return <boolean>expired;
+}
 
-    try
-    {
-        const payload = token.split('.')[1];
-        const decoded = JSON.parse(atob(payload));
-        if (!decoded.exp) return true;
-        const now = Date.now() / 1000;
-        return decoded.exp < now;
-    } catch (e) {
-        console.log(e);
-        return true;
-    }
+export function useLogout(): () => void
+{
+    const router = useRouter();
+    return () => {
+        localStorage.removeItem('user');
+        localStorage.removeItem('authToken');
+        router.replace('/login');
+    };
 }
