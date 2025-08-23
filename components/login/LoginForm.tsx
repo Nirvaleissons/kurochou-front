@@ -1,6 +1,6 @@
 ﻿"use client"
 
-import {FormEvent, useState} from "react";
+import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function LoginForm() {

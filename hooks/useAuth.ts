@@ -1,7 +1,7 @@
 ﻿"use client"
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { isTokenExpired } from "@/utils/auth/auth";
+import { isTokenExpired, checkIsUserAdmin } from "@/utils/auth/auth";
 
 export function useRedirectIfTokenIsValid(): void
 {
@@ -39,4 +39,13 @@ export function useLogout(): () => void
         localStorage.removeItem('authToken');
         router.replace('/login');
     };
+}
+
+export function useIsUserAdmin(): boolean
+{
+    const [isUserAdmin, setIsUserAdmin] = useState<boolean>(false);
+    useEffect(() => {
+        setIsUserAdmin(checkIsUserAdmin());
+    });
+    return isUserAdmin;
 }
