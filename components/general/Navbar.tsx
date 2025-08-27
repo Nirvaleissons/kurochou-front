@@ -35,7 +35,7 @@ export default function Navbar() {
                 }
                 {isAdmin &&
                     <>
-                        <a href ="#" className="text-white opacity-80 hover:opacity-100 transition">
+                        <a href ="/manage-users" className="text-white opacity-80 hover:opacity-100 transition">
                             Gerenciar Usuários
                         </a>
                     </>
