@@ -46,5 +46,5 @@ npm run dev
 ### Sobre o banco de dados
 Apesar do código do projeto estar disponível para todos, o acesso do banco de dados é restrito aos criadores [MrFelopes](https://github.com/mrfelopes) e [Meiro](https://github.com/meirochun). Caso deseje testar o projeto, recomendamos que faça um banco localmente ou em uma plataforma web.
 
-###Agradecimentos ❤
+### Agradecimentos ❤
  - [Gusbagos](https://github.com/GustavodePaulaGorges): Icon do kurochou.me (brasileirinha.svg)
