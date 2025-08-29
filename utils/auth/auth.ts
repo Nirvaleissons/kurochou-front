@@ -1,33 +1,26 @@
-﻿export function isTokenExpired(): boolean
-{
-    if (typeof window === "undefined") return true;
-    const token = localStorage.getItem('authToken');
+﻿export function isTokenExpired(token?: string): boolean {
     if (!token) return true;
 
-    try
-    {
-        const payload = token.split('.')[1];
+    try {
+        const payload = token.split(".")[1];
         const decoded = JSON.parse(atob(payload));
         if (!decoded.exp) return true;
+
         const now = Date.now() / 1000;
         return decoded.exp < now;
     } catch (e) {
-        console.log(e);
+        console.error("Error decoding token:", e);
         return true;
     }
 }
 
-export function checkIsUserAdmin(): boolean
-{
-    if (typeof window === "undefined") return false;
-    const token = localStorage.getItem('authToken');
+export function checkIsUserAdmin(token?: string): boolean {
     if (!token) return false;
 
-    try
-    {
-        const payload = token.split('.')[1];
+    try {
+        const payload = token.split(".")[1];
         const decoded = JSON.parse(atob(payload));
-        const claimKey = <string>process.env.NEXT_PUBLIC_ROLE_CLAIM;
+        const claimKey = process.env.NEXT_PUBLIC_ROLE_CLAIM as string;
         const roleClaim = decoded[claimKey];
         return roleClaim === "Admin";
     } catch (e) {

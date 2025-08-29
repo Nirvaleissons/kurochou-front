@@ -1,7 +1,7 @@
 ﻿"use client"
 
 import LoginForm from "@/components/login/LoginForm";
-import { useRedirectIfTokenIsValid } from "@/hooks/useAuth";
+import { useRedirectIfTokenIsValid } from "@/hooks/useRedirect";
 
 export default function LoginPage() {
     useRedirectIfTokenIsValid();
