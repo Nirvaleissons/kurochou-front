@@ -1,15 +1,13 @@
 ﻿"use client"
-
-import {useIsTokenExpired, useLogout, useIsUserAdmin} from "@/hooks/useAuth";
 import Image from "next/image";
 import KuroIcon from "@/src/assets/brasileirinha.svg"
+import {useAuth} from "@/src/contexts/AuthContext";
 
 export default function Navbar() {
-    const expired: boolean = useIsTokenExpired();
-    const isAdmin: boolean = useIsUserAdmin();
-    const logout: () => void = useLogout();
+    const {isAdmin, isLoggedIn, logout} = useAuth()
     return (
-        <nav className="fixed top-0 left-0 w-full h-20 bg-[rgba(1,3,9,0.95)] shadow-[inset_0px_4px_6px_4px_rgba(0,_0,_0,_0.7)] flex items-center px-6 z-50">
+        <nav
+            className="fixed top-0 left-0 w-full h-20 bg-[rgba(1,3,9,0.95)] shadow-[inset_0px_4px_6px_4px_rgba(0,_0,_0,_0.7)] flex items-center px-6 z-50">
             <div className="text-white text-4xl font-semibold tracking-wide p-3 flex items-baseline">
                 <Image
                     src={KuroIcon}
@@ -28,19 +26,19 @@ export default function Navbar() {
                 <a href="#" className="text-white opacity-80 hover:opacity-100 transition">
                     Sobre
                 </a>
-                {expired &&
+                {!isLoggedIn &&
                     <a href="/login" className="text-white opacity-80 hover:opacity-100 transition">
                         Login
                     </a>
                 }
                 {isAdmin &&
                     <>
-                        <a href ="/manage-users" className="text-white opacity-80 hover:opacity-100 transition">
+                        <a href="/manage-users" className="text-white opacity-80 hover:opacity-100 transition">
                             Gerenciar Usuários
                         </a>
                     </>
                 }
-                {!expired && <>
+                {isLoggedIn && <>
                     <a href="#" className="text-white opacity-80 hover:opacity-100 transition">
                         Upload
                     </a>

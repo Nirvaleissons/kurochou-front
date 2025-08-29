@@ -1,44 +1,38 @@
 ﻿"use client"
 
-import { FormEvent, useState } from "react";
-import { useRouter } from "next/navigation";
+import {FormEvent, useState} from "react";
+import {useRouter} from "next/navigation";
 import toast from "react-hot-toast";
+import {useAuth} from "@/src/contexts/AuthContext";
 
 export default function LoginForm() {
     const [Username, setUsername] = useState("");
     const [Password, setPassword] = useState("");
     const router = useRouter();
+    const {login} = useAuth();
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        try
-        {
+        try {
             const res = await fetch("http://localhost:5149/api/auth/login", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({
-                    Username,
-                    Password,
-                }),
+                body: JSON.stringify({Username, Password}),
             });
             const data = await res.json();
-            if (data?.data?.token)
-            {
-                localStorage.setItem("authToken", data.data.token);
-                localStorage.setItem("user", Username);
+
+            if (data?.data?.token) {
+                login(Username, data.data.token);
                 toast.success(`Bem-vindo(a), ${Username}!`);
                 router.replace("./");
             } else {
-                toast.error("Credenciais inválidas.")
+                toast.error("Credenciais inválidas.");
             }
-
         } catch (e) {
-            if (e instanceof Error)
-            {
-                toast.error("Ocorreu um erro com o servidor")
-            } else toast.error(String(e));
+            toast.error("Ocorreu um erro com o servidor:");
         }
     };
+
 
     return (
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
