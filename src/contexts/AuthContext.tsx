@@ -9,7 +9,8 @@ type AuthContextType = {
     isAdmin: boolean;
     isLoggedIn: boolean;
     login: (username: string, token: string) => void;
-    logout: () => void;
+    logout: (redirect?: boolean) => void;
+    loading: boolean;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -18,17 +19,23 @@ export function AuthProvider({children}: { children: ReactNode }) {
     const [username, setUsername] = useState<string>();
     const [token, setToken] = useState<string>();
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true);
     const router = useRouter();
+
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
         const storedToken = localStorage.getItem("authToken");
 
-        if (storedUser && storedToken && !isTokenExpired()) {
+        if (storedUser && storedToken && !isTokenExpired(storedToken)) {
             setUsername(storedUser);
             setToken(storedToken);
-            setIsAdmin(checkIsUserAdmin(token));
+            setIsAdmin(checkIsUserAdmin(storedToken));
+        } else {
+            logout(false)
         }
-    }, [token]);
+        setLoading(false)
+        
+    }, []);
 
     const login = (username: string, token: string) => {
         localStorage.setItem("user", username);
@@ -38,13 +45,13 @@ export function AuthProvider({children}: { children: ReactNode }) {
         setIsAdmin(checkIsUserAdmin(token));
     };
 
-    const logout = () => {
+    const logout = (redirect: boolean = true) => {
         localStorage.removeItem("user");
         localStorage.removeItem("authToken");
         setUsername(undefined);
         setToken(undefined);
         setIsAdmin(false);
-        router.replace("/login");
+        if (redirect) router.replace("/login");
     };
 
     return (
@@ -56,6 +63,7 @@ export function AuthProvider({children}: { children: ReactNode }) {
                 isLoggedIn: !!token && !isTokenExpired(token),
                 login,
                 logout,
+                loading
             }}
         >
             {children}

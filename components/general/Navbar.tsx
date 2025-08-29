@@ -2,9 +2,11 @@
 import Image from "next/image";
 import KuroIcon from "@/src/assets/brasileirinha.svg"
 import {useAuth} from "@/src/contexts/AuthContext";
+import Link from "next/link";
+import toast from "react-hot-toast";
 
 export default function Navbar() {
-    const {isAdmin, isLoggedIn, logout} = useAuth()
+    const {isAdmin, isLoggedIn, logout, username} = useAuth()
     return (
         <nav
             className="fixed top-0 left-0 w-full h-20 bg-[rgba(1,3,9,0.95)] shadow-[inset_0px_4px_6px_4px_rgba(0,_0,_0,_0.7)] flex items-center px-6 z-50">
@@ -20,38 +22,39 @@ export default function Navbar() {
             </div>
 
             <div className="ml-auto flex space-x-6">
-                <a href="./" className="text-white opacity-80 hover:opacity-100 transition">
+                <Link href="./" className="text-white opacity-80 hover:opacity-100 transition">
                     Início
-                </a>
-                <a href="#" className="text-white opacity-80 hover:opacity-100 transition">
+                </Link>
+                <Link href="#" className="text-white opacity-80 hover:opacity-100 transition">
                     Sobre
-                </a>
+                </Link>
                 {!isLoggedIn &&
-                    <a href="/login" className="text-white opacity-80 hover:opacity-100 transition">
+                    <Link href="/login" className="text-white opacity-80 hover:opacity-100 transition">
                         Login
-                    </a>
+                    </Link>
                 }
                 {isAdmin &&
                     <>
-                        <a href="/manage-users" className="text-white opacity-80 hover:opacity-100 transition">
+                        <Link href="/manage-users" className="text-white opacity-80 hover:opacity-100 transition">
                             Gerenciar Usuários
-                        </a>
+                        </Link>
                     </>
                 }
                 {isLoggedIn && <>
-                    <a href="#" className="text-white opacity-80 hover:opacity-100 transition">
+                    <Link href="#" className="text-white opacity-80 hover:opacity-100 transition">
                         Upload
-                    </a>
-                    <a
-                        href="/login"
+                    </Link>
+                    <Link
+                        href="/"
                         className="text-white ..."
                         onClick={(e) => {
                             e.preventDefault();
-                            logout();
+                            logout(false);
+                            toast(`Até mais, ${username}!`, {icon: '👋', duration: 3000})
                         }}
                     >
                         Sair
-                    </a>
+                    </Link>
                 </>
                 }
             </div>
