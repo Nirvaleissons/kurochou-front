@@ -1,7 +1,7 @@
 ﻿"use client";
-import {createContext, useContext, useEffect, useState, ReactNode} from "react";
-import {useRouter} from "next/navigation";
-import {isTokenExpired, checkIsUserAdmin} from "@/utils/auth/auth";
+import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import { useRouter } from "next/navigation";
+import { isTokenExpired, checkIsUserAdmin } from "@/utils/auth/auth";
 
 type AuthContextType = {
     username?: string;

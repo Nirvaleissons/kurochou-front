@@ -1,7 +1,7 @@
 ﻿"use client"
 import Image from "next/image";
 import KuroIcon from "@/src/assets/brasileirinha.svg"
-import {useAuth} from "@/src/contexts/AuthContext";
+import { useAuth } from "@/src/contexts/AuthContext";
 import Link from "next/link";
 import toast from "react-hot-toast";
 
