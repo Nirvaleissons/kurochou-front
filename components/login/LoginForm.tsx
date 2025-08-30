@@ -1,16 +1,15 @@
 ﻿"use client"
 
-import {FormEvent, useState} from "react";
-import {useRouter} from "next/navigation";
+import { FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import {useAuth} from "@/src/contexts/AuthContext";
+import { useAuth } from "@/src/contexts/AuthContext";
 
 export default function LoginForm() {
     const [Username, setUsername] = useState("");
     const [Password, setPassword] = useState("");
     const router = useRouter();
     const {login} = useAuth();
-
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
@@ -29,7 +28,11 @@ export default function LoginForm() {
                 toast.error("Credenciais inválidas.");
             }
         } catch (e) {
-            toast.error("Ocorreu um erro com o servidor:");
+            let message = "Erro desconhecido."
+            if (e instanceof Error) {
+                message = e.message;
+            }
+            toast.error("Ocorreu um erro com o servidor: " + message);
         }
     };
 

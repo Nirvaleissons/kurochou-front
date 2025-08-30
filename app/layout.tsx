@@ -1,8 +1,8 @@
 import "./globals.css";
-import {ReactNode} from "react";
-import {Outfit} from "next/font/google";
+import { ReactNode } from "react";
+import { Outfit } from "next/font/google";
 import Providers from "@/providers";
-import {AuthProvider} from "@/src/contexts/AuthContext";
+import { AuthProvider } from "@/src/contexts/AuthContext";
 
 const outfit = Outfit({
     subsets: ["latin"],
