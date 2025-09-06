@@ -15,7 +15,6 @@ export default function UserTable({users}: UserTableProps) {
 
     const handleConfirmDelete = () => {
         if (toDelete) {
-            console.log("teste deleta");
             toast.success(`Usuário ${toDelete.username} deletado com sucesso.`, {duration: 3000});
             setToDelete(null);
         }

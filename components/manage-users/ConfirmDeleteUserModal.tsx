@@ -9,7 +9,6 @@ interface ConfirmDeleteUserModalProps {
 }
 
 export default function ConfirmDeleteUserModal({isOpen, onConfirm, onCancel, children}: ConfirmDeleteUserModalProps) {
-    console.log("Modal aberto? ", isOpen)
     if (!isOpen) return null;
     return (
         <AnimatePresence>
